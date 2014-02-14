@@ -9,11 +9,14 @@ based on Hunchentoot
 ```
 
 [uri]: Path for publishing e.g. "/web-calc-test"
+
 [list-of-variables]: For these Variables are HTML-Form fields generated and can be accesd in [body] after submit.
+
 [body]: Create output based on the variables
 
 ## Implementation
 Developed on Debian GNU/Linux with Emacs and Slime on SBCL.
+
 (I've not tested anything in other environments.)
 
 ## Example
