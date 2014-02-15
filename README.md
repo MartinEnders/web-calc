@@ -2,6 +2,8 @@
 
 based on Hunchentoot
 
+The intention of web-calc is to provide an easy way to bring lisp functionality to a web-interface.
+
 ## API
 
 ```cl
