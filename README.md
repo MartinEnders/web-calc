@@ -14,6 +14,15 @@ based on Hunchentoot
 
 [body]: Create output based on the variables
 
+```cl
+(web-calc:to-number ([object] &optional [retrun-nil-when-conversion-not-possible nil])
+```
+
+[object]: Lisp object
+
+[return-nil-when-conversion-not-possible] (default nil): if nil return number when conversion is possible otherwise return object, if true return number when conversion is possible otherwise return nil
+
+
 ## Implementation
 Developed on Debian GNU/Linux with Emacs and Slime on SBCL.
 

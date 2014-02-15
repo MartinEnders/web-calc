@@ -2,7 +2,8 @@
 (defpackage #:web-calc
   (:use #:cl)
   (:export #:with-web-calc
-	   #:test))
+	   #:test
+	   #:to-number))
 
 
 (in-package #:web-calc)
@@ -20,7 +21,7 @@
 
 (defun to-number (object &optional (retrun-nil-when-conversion-not-possible nil))
   "Convert to number if possible.
-If conversion is not possible check 
+If conversion is not possible check
   retrun-nil-when-conversion-not-possible=nil => return object
   retrun-nil-when-conversion-not-possible=t   => return nil"
   (let ((obj (format nil "~A" object)))
@@ -38,7 +39,7 @@ If conversion is not possible check
 	(result (gensym)))
     `(hunchentoot:define-easy-handler (,function-name :uri ,path) ,parameter-list
        (let ((,result ,@body))
-	 (format nil "<html><head><title>test</title></head><body><div id='result'>~A</div><div id='form'>~A</div></body></html>" ,result (make-html-form ',parameter-list))))))
+	 (format nil "<html><head><title>~A</title></head><body><div id='result'>~A</div><div id='form'>~A</div></body></html>" ,path ,result (make-html-form ',parameter-list))))))
        
     
 (defparameter *test-server* nil)
