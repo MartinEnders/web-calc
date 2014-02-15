@@ -15,7 +15,7 @@ based on Hunchentoot
 [body]: Create output based on the variables
 
 ```cl
-(web-calc:to-number ([object] &optional [retrun-nil-when-conversion-not-possible nil])
+(web-calc:to-number ([object] &optional [retrun-nil-when-conversion-not-possible])
 ```
 
 [object]: Lisp object
