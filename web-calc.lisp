@@ -3,16 +3,24 @@
   (:use #:cl)
   (:export #:with-web-calc
 	   #:test
-	   #:to-number))
+	   #:to-number
+	   #:*html-template*
+	   #:make-html-form))
 
 
 (in-package #:web-calc)
 
 ;;; "web-calc" goes here. Hacks and glory await!
 
-
+(defparameter *html-template* "<!DOCTYPE html>~%<html><head><title>~A</title></head><body><div id='result'>~A</div><div id='form'>~A</div></body></html>"
+  "Formatstring with three '~A's
+1st ~A: title of Webpage
+2nd ~A: Content of Webpage
+3rd ~A: HTML-Form of Webpage ")
 
 (defun make-html-form (parameter &key (action-uri "") (method "POST"))
+  "Generate HTML-Form.
+parameter => list of Variable-Names"
   (with-output-to-string (s)
     (format s "<form action='~A' method='~A'>~%" action-uri method)
     (format s "~{  <div>~A: <input type='text' name='~:*~(~A~)'></div>~%~}~%" parameter)
@@ -33,13 +41,13 @@ If conversion is not possible check
 	    nil
 	    object)))))
 
-
-(defmacro with-web-calc ((path parameter-list &key (html-template *html-template*)) &body body)
+;;; INFO: http://www.findinglisp.com/blog/2005/01/keyword-parameters-in-macro-expansions.html
+(defmacro with-web-calc ((path parameter-list &key (html-template '*html-template*) (make-html-form-fn '#'make-html-form) ) &body body)
   (let ((function-name (intern (string-upcase path)))
 	(result (gensym)))
     `(hunchentoot:define-easy-handler (,function-name :uri ,path) ,parameter-list
        (let ((,result ,@body))
-	 (format nil "<html><head><title>~A</title></head><body><div id='result'>~A</div><div id='form'>~A</div></body></html>" ,path ,result (make-html-form ',parameter-list))))))
+	 (format nil ,html-template ,path ,result (funcall ,make-html-form-fn ',parameter-list))))))
        
     
 (defparameter *test-server* nil)

@@ -7,14 +7,42 @@ The intention of web-calc is to provide an easy way to bring lisp functionality 
 ## API
 
 ```cl
-(web-calc:with-web-calc ([uri] [list-of-variables]) [body])
+(web-calc:with-web-calc (uri parameter-list &key (html-template *html-template*) (make-html-form-fn make-html-form) ) [body])
 ```
 
 [uri]: Path for publishing e.g. "/web-calc-test"
 
-[list-of-variables]: For these Variables are HTML-Form fields generated and can be accesd in [body] after submit.
+[parameter-list]: For these Variables are HTML-Form fields generated and can be accesd in [body] after submit.
+
+[html-template] (optional): Formatstring with three '~A's
+* 1st ~A: title of Webpage
+* 2nd ~A: Content of Webpage (Output created by program-logic in body)
+* 3rd ~A: HTML-Form of Webpage
+
+[make-html-form-fn] (optional): Function for the generation of the HTML-Form provided by with-web-calc.
+* make-html-form-fn is called with one parameter 
 
 [body]: Create output based on the variables
+
+```cl
+*html-template*
+```
+Default vaule:  "<!DOCTYPE html>~%<html><head><title>~A</title></head><body><div id='result'>~A</div><div id='form'>~A</div></body></html>"
+
+*html-template* contains the default format-string for HTML-Page creation.
+
+
+```cl
+(make-html-form (parameter &key (action-uri "") (method "POST"))
+```
+This is the default function which is called by with-web-calc to create the HTML-Form.
+
+[parameter]: list of parameters to create input fields for
+
+[action-uri] (optional): Parameter for action attribute in HTML form tag
+
+[method] (optional): Parameter for method attribute in HTML form tag
+
 
 ```cl
 (web-calc:to-number ([object] &optional [retrun-nil-when-conversion-not-possible])
@@ -24,6 +52,10 @@ The intention of web-calc is to provide an easy way to bring lisp functionality 
 
 [return-nil-when-conversion-not-possible] (default nil): if nil return number when conversion is possible otherwise return object, if true return number when conversion is possible otherwise return nil
 
+## Requires
+* hunchentoot
+* parse-number
+hunchentoot and parse-number are 'quickloadable'
 
 ## Implementation
 Developed on Debian GNU/Linux with Emacs and Slime on SBCL.
@@ -53,3 +85,8 @@ Testfunction (with parameter for the Hunchentootobject):
 ```
 
 
+![Start](pictures/001-start.png)
+
+![Values Inserted](pictures/002-values-inserted.png)
+
+![After Submit](pictures/003-after-submit.png)
