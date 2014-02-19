@@ -45,7 +45,7 @@ This is the default function which is called by with-web-calc to create the HTML
 
 
 ```cl
-(web-calc:to-number ([object] &optional [retrun-nil-when-conversion-not-possible])
+(web-calc:to-number (object &optional retrun-nil-when-conversion-not-possible)
 ```
 
 [object]: Lisp object
