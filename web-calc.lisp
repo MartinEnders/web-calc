@@ -2,14 +2,14 @@
 (defpackage #:web-calc
   (:use #:cl)
   (:export #:with-web-calc
-	   #:test))
+	   #:test
+	   #:to-number))
 
 
 (in-package #:web-calc)
 
 ;;; "web-calc" goes here. Hacks and glory await!
 
-(defparameter *html-template* "<!DOCTYPE html>~%<html><head><title>test</title></head><body><div id='result'>~A</div><div id='form'>~A</div></body></html>")
 
 
 (defun make-html-form (parameter &key (action-uri "") (method "POST"))
@@ -21,7 +21,7 @@
 
 (defun to-number (object &optional (retrun-nil-when-conversion-not-possible nil))
   "Convert to number if possible.
-If conversion is not possible check 
+If conversion is not possible check
   retrun-nil-when-conversion-not-possible=nil => return object
   retrun-nil-when-conversion-not-possible=t   => return nil"
   (let ((obj (format nil "~A" object)))
@@ -34,12 +34,12 @@ If conversion is not possible check
 	    object)))))
 
 
-(defmacro with-web-calc ((path parameter-list &key (html-template *html-template*) &body body)
+(defmacro with-web-calc ((path parameter-list &key (html-template *html-template*)) &body body)
   (let ((function-name (intern (string-upcase path)))
 	(result (gensym)))
     `(hunchentoot:define-easy-handler (,function-name :uri ,path) ,parameter-list
        (let ((,result ,@body))
-	 (format nil ,html-template ,result (make-html-form ',parameter-list))))))
+	 (format nil "<html><head><title>~A</title></head><body><div id='result'>~A</div><div id='form'>~A</div></body></html>" ,path ,result (make-html-form ',parameter-list))))))
        
     
 (defparameter *test-server* nil)

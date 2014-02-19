@@ -2,6 +2,8 @@
 
 based on Hunchentoot
 
+The intention of web-calc is to provide an easy way to bring lisp functionality to a web-interface.
+
 ## API
 
 ```cl
@@ -13,6 +15,15 @@ based on Hunchentoot
 [list-of-variables]: For these Variables are HTML-Form fields generated and can be accesd in [body] after submit.
 
 [body]: Create output based on the variables
+
+```cl
+(web-calc:to-number ([object] &optional [retrun-nil-when-conversion-not-possible])
+```
+
+[object]: Lisp object
+
+[return-nil-when-conversion-not-possible] (default nil): if nil return number when conversion is possible otherwise return object, if true return number when conversion is possible otherwise return nil
+
 
 ## Implementation
 Developed on Debian GNU/Linux with Emacs and Slime on SBCL.
