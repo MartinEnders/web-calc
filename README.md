@@ -27,7 +27,7 @@ The intention of web-calc is to provide an easy way to bring lisp functionality 
 ```cl
 *html-template*
 ```
-Default vaule:  "<!DOCTYPE html>~%<html><head><title>~A</title></head><body><div id='result'>~A</div><div id='form'>~A</div></body></html>"
+Default vaule:  "&lt;!DOCTYPE html>~%&lt;html>&lt;head>&lt;title>~A&lt;/title>&lt;/head>&lt;body>&lt;div id='result'>~A&lt;/div>&lt;div id='form'>~A&lt;/div>&lt;/body>&lt;/html>"
 
 *html-template* contains the default format-string for HTML-Page creation.
 
